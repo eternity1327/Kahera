@@ -1,4 +1,4 @@
-# TindaMate
+# Kahera
 
 POS and inventory app for small stores.
 
