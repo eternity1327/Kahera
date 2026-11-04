@@ -57,10 +57,10 @@ export default function Pos() {
         </form>
         <div className="grid">
           {shown.map((p) => (
-            <button key={p.id} className="item" onClick={() => addToCart(p)} disabled={p.stock === 0}>
+            <button key={p.id} className="item" onClick={() => addToCart(p)} disabled={p.on_hand_units === 0}>
               <strong>{p.name}</strong>
               <span>{peso(p.price)}</span>
-              <small>{p.stock} in stock</small>
+              <small>{p.on_hand_units} in stock</small>
             </button>
           ))}
         </div>
