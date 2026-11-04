@@ -1,4 +1,4 @@
-﻿# Kahera
+# Kahera
 
 POS and restock assistant for sari-sari stores. Cashiers sell from the web app; an AI agent called **@restock** watches stock in a Telegram group, drafts purchase orders within the owner's budget, and the owner approves them with one tap.
 
