@@ -11,11 +11,11 @@ Built for the WeMakeDevs **Flip the Switch** hackathon, Track 01 Business Workfl
 ## How it works
 
 1. Cashiers record sales in the POS.
-2. Kahera computes each item's **reorder point** = average daily sales (last 30 days) Ã— supplier lead time + safety stock (average daily sales Ã— safety days).
+2. Kahera computes each item's **reorder point** = average daily sales (last 30 days) × supplier lead time + safety stock (average daily sales × safety days).
 3. Items at or below their reorder point are marked `low_stock`.
 4. `GET /restock/suggestions?budget=` orders enough to cover the reorder point plus 7 days, rounded **up to whole cases**, most urgent first, and never over the budget.
 5. @restock posts the plan in Telegram and drafts purchase orders.
-6. Purchase orders move `draft â†’ pending_approval â†’ approved â†’ sent â†’ received`. Receiving adds `packs Ã— pack_size` to stock. Every step is written to the audit log.
+6. Purchase orders move `draft → pending_approval → approved → sent → received`. Receiving adds `packs × pack_size` to stock. Every step is written to the audit log.
 
 ## Roles
 
@@ -40,10 +40,10 @@ The agent role is enforced by the API, not just the prompt: even if asked, an ag
 
 ### Channel setup
 
-1. Telegram: message @BotFather, `/newbot`, copy the token. Then `/mybots` â†’ bot â†’ Bot Settings â†’ Group Privacy â†’ **Turn off**.
-2. Switch Console: Home â†’ Messaging apps â†’ **Connect** â†’ Telegram â†’ paste token and bot username.
+1. Telegram: message @BotFather, `/newbot`, copy the token. Then `/mybots` → bot → Bot Settings → Group Privacy → **Turn off**.
+2. Switch Console: Home → Messaging apps → **Connect** → Telegram → paste token and bot username.
 3. Telegram: create a group, add the bot, send a message. The room appears under Your Rooms.
-4. Switch: Home â†’ **Link account** so the agent knows who you are.
+4. Switch: Home → **Link account** so the agent knows who you are.
 
 ### Agent setup
 
