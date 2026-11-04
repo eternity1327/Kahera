@@ -56,6 +56,17 @@ The agent role is enforced by the API, not just the prompt: even if asked, an ag
 
 Switch passes agents only a fixed set of environment variables, so the agent gets its API address and login from [`switch/CLAUDE.md`](switch/CLAUDE.md) in its working folder.
 
+### Stock alerts
+
+Kahera posts to the Telegram room by itself, through the same bot Switch uses:
+
+- **After a sale** that drops an item to its reorder point: "⚠️ Paubos na: …"
+- **Every morning**: a list of everything that is low, from `python alerts.py`, run by Windows Task Scheduler (or cron) at 8:00
+
+Each alert ends with a ready reply for the owner, `@restock ano kulang? budget 3000`, so drafting the orders is one tap. Sending a message does not interfere with Switch, which only reads the bot's updates.
+
+Set `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` and `RESTOCK_BUDGET` in `backend/.env`, then check with `python alerts.py test`.
+
 ## Run it
 
 ### Backend
