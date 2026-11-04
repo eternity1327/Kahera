@@ -1,4 +1,4 @@
-# Kahera
+﻿# Kahera
 
 POS and restock assistant for sari-sari stores. Cashiers sell from the web app; an AI agent called **@restock** watches stock in a Telegram group, drafts purchase orders within the owner's budget, and the owner approves them with one tap.
 
@@ -11,11 +11,11 @@ Built for the WeMakeDevs **Flip the Switch** hackathon, Track 01 Business Workfl
 ## How it works
 
 1. Cashiers record sales in the POS.
-2. Kahera computes each item's **reorder point** = average daily sales (last 30 days) × supplier lead time + safety stock (average daily sales × safety days).
+2. Kahera computes each item's **reorder point** = average daily sales (last 30 days) Ã— supplier lead time + safety stock (average daily sales Ã— safety days).
 3. Items at or below their reorder point are marked `low_stock`.
 4. `GET /restock/suggestions?budget=` orders enough to cover the reorder point plus 7 days, rounded **up to whole cases**, most urgent first, and never over the budget.
 5. @restock posts the plan in Telegram and drafts purchase orders.
-6. Purchase orders move `draft → pending_approval → approved → sent → received`. Receiving adds `packs × pack_size` to stock. Every step is written to the audit log.
+6. Purchase orders move `draft â†’ pending_approval â†’ approved â†’ sent â†’ received`. Receiving adds `packs Ã— pack_size` to stock. Every step is written to the audit log.
 
 ## Roles
 
@@ -40,20 +40,21 @@ The agent role is enforced by the API, not just the prompt: even if asked, an ag
 
 ### Channel setup
 
-1. Telegram: message @BotFather, `/newbot`, copy the token. Then `/mybots` → bot → Bot Settings → Group Privacy → **Turn off**.
-2. Switch Console: Home → Messaging apps → **Connect** → Telegram → paste token and bot username.
+1. Telegram: message @BotFather, `/newbot`, copy the token. Then `/mybots` â†’ bot â†’ Bot Settings â†’ Group Privacy â†’ **Turn off**.
+2. Switch Console: Home â†’ Messaging apps â†’ **Connect** â†’ Telegram â†’ paste token and bot username.
 3. Telegram: create a group, add the bot, send a message. The room appears under Your Rooms.
-4. Switch: Home → **Link account** so the agent knows who you are.
+4. Switch: Home â†’ **Link account** so the agent knows who you are.
 
 ### Agent setup
 
-1. Seed the database (below) so the `restock` agent user exists, then get its token:
-   ```bash
-   curl -X POST http://localhost:8000/auth/login -d "username=restock&password=kahera123"
-   ```
-2. In Switch Console → Your Agents → add a **Claude Code** agent named `restock`, and give it `KAHERA_API=http://localhost:8000` and `KAHERA_TOKEN=<token>`.
-3. Paste [`switch/restock-agent.md`](switch/restock-agent.md) into its room instructions.
-4. Invite it to the room: `/invite_agent @restock` in the Telegram group.
+1. Sign in to Claude Code once on the laptop that runs Switch: run `claude` in a terminal.
+2. Switch Console → **Your Agents** → the card with a plus.
+3. Name `restock`, a short description, run location **This computer**, directory `switch` in this repo, provider **Claude Code**.
+4. Paste the rules from [`switch/restock-agent.md`](switch/restock-agent.md) into **Agent instructions**.
+5. **Add agent**, then invite it into the Telegram room.
+6. In the room's settings, under **General**, set the room Instructions to the three rules: use live API data, one thread per order, never approve.
+
+Switch passes agents only a fixed set of environment variables, so the agent gets its API address and login from [`switch/CLAUDE.md`](switch/CLAUDE.md) in its working folder.
 
 ## Run it
 
