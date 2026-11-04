@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
-import { api, formatDate, getActiveRole, resetMockState } from "../api.js";
-import { IconShield, IconPlus, IconRefresh, IconX } from "../components/Icons.jsx";
+import { api, formatDate, getActiveRole } from "../api.js";
+import { IconShield, IconPlus, IconX } from "../components/Icons.jsx";
 
 export default function Settings({ onNotify, theme, onToggleTheme }) {
   const [users, setUsers] = useState([]);
@@ -27,7 +27,7 @@ export default function Settings({ onNotify, theme, onToggleTheme }) {
   };
 
   useEffect(() => {
-    loadData();
+    if (isOwner) loadData();
   }, []);
 
   const handleAddStaff = async (e) => {
@@ -47,18 +47,9 @@ export default function Settings({ onNotify, theme, onToggleTheme }) {
     }
   };
 
-  const handleResetData = () => {
-    if (window.confirm("Are you sure you want to reset all demo mock data back to factory defaults?")) {
-      resetMockState();
-      onNotify("Reset all demo data to initial seed state", "success");
-      setTimeout(() => window.location.reload(), 400);
-    }
-  };
-
   return (
     <div className="settings-page" style={{ display: "flex", flexDirection: "column", gap: "24px" }}>
-      {/* Store Profile Card */}
-      <div className="card">
+            <div className="card">
         <div className="card-header">
           <div>
             <h3 className="card-title">Store Profile & Settings</h3>
@@ -86,7 +77,8 @@ export default function Settings({ onNotify, theme, onToggleTheme }) {
         </div>
       </div>
 
-      {/* User & Role Management (Owner Only) */}
+      {isOwner && (
+        <>
       <div className="card">
         <div className="card-header">
           <div>
@@ -153,9 +145,6 @@ export default function Settings({ onNotify, theme, onToggleTheme }) {
             <h3 className="card-title">System Audit Log</h3>
             <p className="card-subtitle">Immutable event history of product edits, sales, and purchase orders</p>
           </div>
-          <button className="btn btn-secondary btn-sm" onClick={handleResetData}>
-            <IconRefresh size={14} /> Reset Demo Data
-          </button>
         </div>
 
         <div className="table-container" style={{ maxHeight: "320px", overflowY: "auto" }}>
@@ -197,6 +186,8 @@ export default function Settings({ onNotify, theme, onToggleTheme }) {
           </table>
         </div>
       </div>
+        </>
+      )}
 
       {/* Add Staff Modal */}
       {isAddUserOpen && (

@@ -72,9 +72,8 @@ export default function Dashboard({ onNavigate, onOpenNewPo }) {
             </div>
           </div>
           <div className="metric-value">{peso(totalStockValuation)}</div>
-          <div className="metric-subtext" style={{ color: "var(--color-success)" }}>
-            <span>↑ 8.4%</span>
-            <span style={{ color: "var(--color-text-muted)" }}>from last month</span>
+          <div className="metric-subtext">
+            <span style={{ color: "var(--color-text-muted)" }}>At cost, across all products</span>
           </div>
         </div>
 

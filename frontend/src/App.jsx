@@ -116,13 +116,7 @@ export default function App() {
 
       <div className="main-wrapper">
         {/* Sticky Top Header */}
-        <Header
-          title={getPageTitle()}
-          onRoleChange={(newRole) => {
-            addToast(`Active viewing role switched to: ${newRole.toUpperCase()}`, "info");
-            refreshCounts();
-          }}
-        />
+        <Header title={getPageTitle()} />
 
         {/* Dynamic Page Content */}
         <main className="main-content">

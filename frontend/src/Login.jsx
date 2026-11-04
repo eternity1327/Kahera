@@ -22,25 +22,17 @@ export default function Login({ onLogin }) {
       const data = await api("/auth/login", {
         method: "POST",
         form: { username, password },
-        body: { username, password },
       });
       setToken(data.access_token);
-      setActiveUsername(username);
-      setActiveRole(username.toLowerCase().includes("owner") ? "owner" : "cashier");
+      const me = await api("/auth/me");
+      setActiveUsername(me.username);
+      setActiveRole(me.role);
       onLogin();
     } catch (err) {
       setError(err.message);
     } finally {
       setLoading(false);
     }
-  };
-
-  const handleQuickDemoLogin = (role) => {
-    const user = role === "agent" ? "restock" : role;
-    setToken("mock-token-" + user);
-    setActiveRole(role);
-    setActiveUsername(user);
-    onLogin();
   };
 
   return (
@@ -85,54 +77,6 @@ export default function Login({ onLogin }) {
           </div>
         )}
 
-        {/* Quick Demo Access Bar */}
-        <div style={{ marginBottom: "20px" }}>
-          <div
-            style={{
-              fontSize: "0.72rem",
-              fontWeight: 700,
-              textTransform: "uppercase",
-              letterSpacing: "0.05em",
-              color: "var(--color-text-muted)",
-              marginBottom: "8px",
-              textAlign: "center",
-            }}
-          >
-            Quick 1-Click Demo Login
-          </div>
-          <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr 1fr", gap: "8px" }}>
-            <button
-              type="button"
-              className="btn btn-secondary btn-sm"
-              style={{ fontWeight: 700 }}
-              onClick={() => handleQuickDemoLogin("owner")}
-            >
-              👑 Owner
-            </button>
-            <button
-              type="button"
-              className="btn btn-secondary btn-sm"
-              style={{ fontWeight: 700 }}
-              onClick={() => handleQuickDemoLogin("cashier")}
-            >
-              💼 Cashier
-            </button>
-            <button
-              type="button"
-              className="btn btn-secondary btn-sm"
-              style={{ fontWeight: 700 }}
-              onClick={() => handleQuickDemoLogin("agent")}
-            >
-              🤖 Agent
-            </button>
-          </div>
-        </div>
-
-        <div style={{ display: "flex", alignItems: "center", gap: "10px", margin: "16px 0" }}>
-          <div style={{ flex: 1, height: "1px", background: "var(--color-divider)" }} />
-          <span style={{ fontSize: "0.75rem", color: "var(--color-text-muted)" }}>or log in with credentials</span>
-          <div style={{ flex: 1, height: "1px", background: "var(--color-divider)" }} />
-        </div>
 
         {/* Credentials Form */}
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>

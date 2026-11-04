@@ -432,25 +432,13 @@ export default function PurchaseOrders({ onNotify, initialRestockProduct }) {
                         )}
 
                         {/* APPROVED ACTIONS */}
-                        {po.status === "approved" && (
-                          <>
-                            {isOwner && (
-                              <button
-                                className="btn btn-secondary btn-sm"
-                                onClick={() => handleSendPo(po.id)}
-                              >
-                                <IconSend size={12} /> Send
-                              </button>
-                            )}
-                            {canReceive && (
-                              <button
-                                className="btn btn-primary btn-sm"
-                                onClick={() => openReceiveModal(po)}
-                              >
-                                <IconTruck size={12} /> Receive
-                              </button>
-                            )}
-                          </>
+                        {po.status === "approved" && isOwner && (
+                          <button
+                            className="btn btn-secondary btn-sm"
+                            onClick={() => handleSendPo(po.id)}
+                          >
+                            <IconSend size={12} /> Send
+                          </button>
                         )}
 
                         {/* SENT ACTIONS */}

@@ -1,5 +1,5 @@
 import React from "react";
-import { apiCatalog } from "../fakeData.js";
+import { apiCatalog } from "../apiCatalog.js";
 import { IconX } from "./Icons.jsx";
 
 export default function ApiCatalogModal({ isOpen, onClose }) {
@@ -12,7 +12,7 @@ export default function ApiCatalogModal({ isOpen, onClose }) {
           <div>
             <h3>Kahera API Specifications</h3>
             <p style={{ fontSize: "0.8rem", color: "var(--color-text-muted)" }}>
-              All 22 endpoints supported with matching schemas in fakeData.js and FastAPI
+              Every endpoint of the Kahera FastAPI backend
             </p>
           </div>
           <button className="btn-icon" onClick={onClose}>
