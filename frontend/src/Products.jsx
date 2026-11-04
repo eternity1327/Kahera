@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import { api, peso } from "./api.js";
 
-const emptyForm = { name: "", barcode: "", price: "", stock: "" };
+const emptyForm = { name: "", barcode: "", price: "", on_hand_units: "" };
 
 export default function Products() {
   const [products, setProducts] = useState([]);
@@ -22,7 +22,7 @@ export default function Products() {
     try {
       await api("/products", {
         method: "POST",
-        body: { ...form, barcode: form.barcode || null, price: Number(form.price), stock: Number(form.stock) },
+        body: { ...form, barcode: form.barcode || null, price: Number(form.price), on_hand_units: Number(form.on_hand_units) },
       });
       setForm(emptyForm);
       load();
@@ -48,7 +48,7 @@ export default function Products() {
         <input placeholder="Name" value={form.name} onChange={update("name")} required />
         <input placeholder="Barcode" value={form.barcode} onChange={update("barcode")} />
         <input type="number" step="0.01" placeholder="Price" value={form.price} onChange={update("price")} required />
-        <input type="number" placeholder="Stock" value={form.stock} onChange={update("stock")} required />
+        <input type="number" placeholder="Stock" value={form.on_hand_units} onChange={update("on_hand_units")} required />
         <button className="primary">Add</button>
       </form>
       {error && <p className="error">{error}</p>}
@@ -68,7 +68,7 @@ export default function Products() {
               <td>{p.name}</td>
               <td>{p.barcode}</td>
               <td>{peso(p.price)}</td>
-              <td>{p.stock}</td>
+              <td>{p.on_hand_units}</td>
               <td>
                 <button onClick={() => remove(p.id)}>Delete</button>
               </td>
