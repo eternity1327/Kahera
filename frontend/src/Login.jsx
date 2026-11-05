@@ -46,7 +46,7 @@ export default function Login({ onLogin }) {
         background: "radial-gradient(circle at top right, rgba(0, 90, 156, 0.08), transparent 70%), var(--color-background)",
       }}
     >
-      <div className="card" style={{ width: "100%", maxWidth: "420px", padding: "32px", boxShadow: "var(--shadow-modal)" }}>
+      <div className="card login-card">
         {/* Brand Header */}
         <div style={{ textAlign: "center", marginBottom: "24px" }}>
           <div

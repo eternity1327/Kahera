@@ -104,7 +104,7 @@ export default function Pos({ onNotify }) {
   );
 
   return (
-    <div className="pos-page" style={{ display: "grid", gridTemplateColumns: "1fr 340px", gap: "24px" }}>
+    <div className="pos-page pos-layout">
       {/* Products Grid Section */}
       <div>
         <form onSubmit={handleBarcodeSubmit} style={{ marginBottom: "16px" }}>
@@ -120,7 +120,7 @@ export default function Pos({ onNotify }) {
           </div>
         </form>
 
-        <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fill, minmax(180px, 1fr))", gap: "12px" }}>
+        <div className="pos-product-grid">
           {filteredProducts.map((p) => {
             const isOutOfStock = p.on_hand_units <= 0;
             return (
@@ -180,7 +180,7 @@ export default function Pos({ onNotify }) {
       </div>
 
       {/* POS Cart Sidebar */}
-      <div className="card" style={{ display: "flex", flexDirection: "column", height: "fit-content", minHeight: "520px" }}>
+      <div className="card pos-cart-card">
         <div className="card-header" style={{ marginBottom: "12px" }}>
           <h3 className="card-title" style={{ display: "flex", alignItems: "center", gap: "8px" }}>
             <IconShoppingCart size={18} /> Active Cart

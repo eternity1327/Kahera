@@ -25,10 +25,11 @@ export default function Sidebar({
   const username = getActiveUsername();
 
   const navItems = [
-    { id: "dashboard", label: "Dashboard", icon: IconDashboard },
+    { id: "dashboard", label: "Dashboard", shortLabel: "Home", icon: IconDashboard },
     {
       id: "products",
       label: "Products",
+      shortLabel: "Products",
       icon: IconPackage,
       badge: lowStockCount > 0 ? lowStockCount : null,
       badgeColor: "badge-danger",
@@ -36,17 +37,19 @@ export default function Sidebar({
     {
       id: "purchase-orders",
       label: "Purchase Orders",
+      shortLabel: "Orders",
       icon: IconFileText,
       badge: pendingPoCount > 0 ? pendingPoCount : null,
       badgeColor: "badge-submitted",
     },
-    { id: "pos", label: "Point of Sale", icon: IconShoppingCart },
-    { id: "reports", label: "Reports", icon: IconBarChart },
-    { id: "settings", label: "Settings", icon: IconSettings },
+    { id: "pos", label: "Point of Sale", shortLabel: "POS", icon: IconShoppingCart },
+    { id: "reports", label: "Reports", shortLabel: "Reports", icon: IconBarChart },
+    { id: "settings", label: "Settings", shortLabel: "Settings", icon: IconSettings },
   ];
 
   return (
     <aside className="sidebar">
+      {/* Brand Header (Desktop only) */}
       <div className="sidebar-brand">
         <div className="brand-icon">K</div>
         <div className="brand-text">
@@ -55,6 +58,7 @@ export default function Sidebar({
         </div>
       </div>
 
+      {/* Navigation (Sidebar on Desktop, Mobile Navbar at the Bottom on Phones) */}
       <nav className="sidebar-nav">
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -65,13 +69,21 @@ export default function Sidebar({
               type="button"
               className={`nav-item ${isActive ? "active" : ""}`}
               onClick={() => onNavigate(item.id)}
+              aria-label={item.label}
+              title={item.label}
             >
-              <span className="nav-icon">
-                <Icon size={18} />
+              <span className="nav-icon-wrapper">
+                <Icon size={19} />
+                {item.badge && (
+                  <span className={`badge ${item.badgeColor} nav-badge mobile-badge`}>
+                    {item.badge}
+                  </span>
+                )}
               </span>
-              <span className="nav-label">{item.label}</span>
+              <span className="nav-label desktop-label">{item.label}</span>
+              <span className="nav-label mobile-label">{item.shortLabel || item.label}</span>
               {item.badge && (
-                <span className={`badge ${item.badgeColor} nav-badge`}>
+                <span className={`badge ${item.badgeColor} nav-badge desktop-badge`}>
                   {item.badge}
                 </span>
               )}
@@ -80,6 +92,7 @@ export default function Sidebar({
         })}
       </nav>
 
+      {/* User Footer (Desktop only) */}
       <div className="sidebar-footer">
         <div className="user-card">
           <div className="user-avatar">{username.slice(0, 2).toUpperCase()}</div>

@@ -75,6 +75,12 @@ export default function App() {
     setCurrentPage("purchase-orders");
   };
 
+  const handleNavigate = (page) => {
+    if (page !== "purchase-orders") setPrefilledRestockProduct(null);
+    setCurrentPage(page);
+    window.scrollTo({ top: 0, behavior: "smooth" });
+  };
+
   if (!isLoggedIn) {
     return <Login onLogin={() => setIsLoggedIn(true)} />;
   }
@@ -100,13 +106,10 @@ export default function App() {
 
   return (
     <div className="app-layout">
-      {/* Persistent Left Sidebar */}
+      {/* Responsive Navigation: Persistent Sidebar on Desktop, Mobile Bottom Navbar on Phones */}
       <Sidebar
         currentPage={currentPage}
-        onNavigate={(page) => {
-          if (page !== "purchase-orders") setPrefilledRestockProduct(null);
-          setCurrentPage(page);
-        }}
+        onNavigate={handleNavigate}
         theme={theme}
         onToggleTheme={toggleTheme}
         onLogout={handleLogout}
@@ -116,13 +119,18 @@ export default function App() {
 
       <div className="main-wrapper">
         {/* Sticky Top Header */}
-        <Header title={getPageTitle()} />
+        <Header
+          title={getPageTitle()}
+          theme={theme}
+          onToggleTheme={toggleTheme}
+          onLogout={handleLogout}
+        />
 
         {/* Dynamic Page Content */}
         <main className="main-content">
           {currentPage === "dashboard" && (
             <Dashboard
-              onNavigate={(page) => setCurrentPage(page)}
+              onNavigate={(page) => handleNavigate(page)}
               onOpenNewPo={handleOpenNewPoFromDashboard}
             />
           )}

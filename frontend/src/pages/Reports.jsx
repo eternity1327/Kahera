@@ -75,6 +75,30 @@ export default function Reports({ onNotify }) {
     onNotify("Exported inventory valuation report", "success");
   };
 
+  const getStatusBadge = (status) => {
+    switch (status) {
+      case "draft":
+        return <span className="badge badge-draft">Draft</span>;
+      case "pending_approval":
+        return <span className="badge badge-submitted">Pending Approval</span>;
+      case "approved":
+        return <span className="badge badge-approved">Approved</span>;
+      case "sent":
+        return <span className="badge badge-sent">Sent</span>;
+      case "received":
+        return <span className="badge badge-received">Received</span>;
+      default:
+        return <span className="badge badge-draft">{status}</span>;
+    }
+  };
+
+  const topProducts = products
+    .slice()
+    .sort((a, b) => b.on_hand_units * b.price - a.on_hand_units * a.price)
+    .slice(0, 6);
+
+  const workflowStatuses = ["draft", "pending_approval", "approved", "sent", "received"];
+
   return (
     <div className="reports-page">
       <div className="toolbar">
@@ -143,74 +167,126 @@ export default function Reports({ onNotify }) {
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "1fr 1fr", gap: "24px", marginBottom: "24px" }}>
+      {/* Responsive Reports Breakdown Section */}
+      <div className="reports-two-col">
         {/* Top Stock Valuation Items */}
-        <div className="card">
+        <div className="card report-table-card">
           <div className="card-header">
-            <h3 className="card-title">Top Value Items in Stock</h3>
+            <div>
+              <h3 className="card-title">Top Value Items in Stock</h3>
+              <p className="card-subtitle">Highest capital value items currently in inventory</p>
+            </div>
           </div>
-          <div className="table-container">
+
+          {/* Desktop Table View */}
+          <div className="table-container report-desktop-table">
             <table>
               <thead>
                 <tr>
                   <th>Product</th>
                   <th>Stock</th>
-                  <th>Cost Value</th>
-                  <th>Retail Value</th>
+                  <th style={{ textAlign: "right" }}>Cost Value</th>
+                  <th style={{ textAlign: "right" }}>Retail Value</th>
                 </tr>
               </thead>
               <tbody>
-                {products
-                  .slice()
-                  .sort((a, b) => b.on_hand_units * b.price - a.on_hand_units * a.price)
-                  .slice(0, 6)
-                  .map((p) => {
+                {topProducts.length === 0 ? (
+                  <tr>
+                    <td colSpan="4" style={{ textAlign: "center", padding: "24px", color: "var(--color-text-muted)" }}>
+                      No products recorded yet.
+                    </td>
+                  </tr>
+                ) : (
+                  topProducts.map((p) => {
                     const unitCost = p.pack_size ? p.cost_per_pack / p.pack_size : 0;
                     return (
                       <tr key={p.id}>
                         <td>
                           <strong>{p.name}</strong>
+                          <div style={{ fontSize: "0.72rem", color: "var(--color-text-muted)" }}>
+                            {p.barcode || `SKU-${p.id}`}
+                          </div>
                         </td>
-                        <td>{p.on_hand_units} units</td>
-                        <td className="mono">{peso(p.on_hand_units * unitCost)}</td>
-                        <td className="mono" style={{ fontWeight: 700, color: "var(--color-primary)" }}>
+                        <td style={{ whiteSpace: "nowrap" }}>
+                          <span className="badge badge-draft">{p.on_hand_units} units</span>
+                        </td>
+                        <td className="mono" style={{ textAlign: "right", whiteSpace: "nowrap" }}>
+                          {peso(p.on_hand_units * unitCost)}
+                        </td>
+                        <td className="mono" style={{ textAlign: "right", fontWeight: 700, color: "var(--color-primary)", whiteSpace: "nowrap" }}>
                           {peso(p.on_hand_units * p.price)}
                         </td>
                       </tr>
                     );
-                  })}
+                  })
+                )}
               </tbody>
             </table>
+          </div>
+
+          {/* Mobile Card-List View */}
+          <div className="report-mobile-list">
+            {topProducts.length === 0 ? (
+              <div style={{ textAlign: "center", padding: "24px", color: "var(--color-text-muted)", fontSize: "0.85rem" }}>
+                No products recorded yet.
+              </div>
+            ) : (
+              topProducts.map((p) => {
+                const unitCost = p.pack_size ? p.cost_per_pack / p.pack_size : 0;
+                return (
+                  <div key={p.id} className="report-list-item">
+                    <div className="report-item-main">
+                      <div className="report-item-title">{p.name}</div>
+                      <div className="report-item-sub">
+                        <span className="badge badge-draft">{p.on_hand_units} units</span>
+                        {p.barcode && <span className="mono">{p.barcode}</span>}
+                      </div>
+                    </div>
+                    <div className="report-item-values">
+                      <div className="report-item-retail">{peso(p.on_hand_units * p.price)}</div>
+                      <div className="report-item-cost">Cost: {peso(p.on_hand_units * unitCost)}</div>
+                    </div>
+                  </div>
+                );
+              })
+            )}
           </div>
         </div>
 
         {/* Purchase Order Status Distribution */}
-        <div className="card">
+        <div className="card report-table-card">
           <div className="card-header">
-            <h3 className="card-title">Purchase Order Workflow Breakdown</h3>
+            <div>
+              <h3 className="card-title">Purchase Order Workflow Breakdown</h3>
+              <p className="card-subtitle">Capital allocated across order approval stages</p>
+            </div>
           </div>
-          <div className="table-container">
+
+          {/* Desktop Table View */}
+          <div className="table-container report-desktop-table">
             <table>
               <thead>
                 <tr>
                   <th>Workflow Status</th>
                   <th>Orders Count</th>
-                  <th>Total Capital Value</th>
+                  <th style={{ textAlign: "right" }}>Total Capital Value</th>
                 </tr>
               </thead>
               <tbody>
-                {["draft", "pending_approval", "approved", "sent", "received"].map((status) => {
+                {workflowStatuses.map((status) => {
                   const matching = purchaseOrders.filter((po) => po.status === status);
                   const sum = matching.reduce((acc, po) => acc + Number(po.total || 0), 0);
                   return (
                     <tr key={status}>
                       <td>
-                        <span style={{ textTransform: "capitalize", fontWeight: 600 }}>
-                          {status.replace("_", " ")}
+                        {getStatusBadge(status)}
+                      </td>
+                      <td style={{ whiteSpace: "nowrap" }}>
+                        <span style={{ fontWeight: 500 }}>
+                          {matching.length} {matching.length === 1 ? "order" : "orders"}
                         </span>
                       </td>
-                      <td>{matching.length} orders</td>
-                      <td className="mono">
+                      <td className="mono" style={{ textAlign: "right", whiteSpace: "nowrap" }}>
                         <strong>{peso(sum)}</strong>
                       </td>
                     </tr>
@@ -219,9 +295,30 @@ export default function Reports({ onNotify }) {
               </tbody>
             </table>
           </div>
+
+          {/* Mobile Card-List View */}
+          <div className="report-mobile-list">
+            {workflowStatuses.map((status) => {
+              const matching = purchaseOrders.filter((po) => po.status === status);
+              const sum = matching.reduce((acc, po) => acc + Number(po.total || 0), 0);
+              return (
+                <div key={status} className="report-list-item">
+                  <div className="report-item-main">
+                    <div>{getStatusBadge(status)}</div>
+                    <div className="report-item-sub" style={{ marginTop: "4px" }}>
+                      {matching.length} {matching.length === 1 ? "order" : "orders"}
+                    </div>
+                  </div>
+                  <div className="report-item-values">
+                    <div className="report-item-retail">{peso(sum)}</div>
+                    <div className="report-item-cost">Allocated Capital</div>
+                  </div>
+                </div>
+              );
+            })}
+          </div>
         </div>
       </div>
     </div>
   );
 }
-

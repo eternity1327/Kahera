@@ -284,7 +284,7 @@ export default function PurchaseOrders({ onNotify, initialRestockProduct }) {
           </p>
         </div>
 
-        <div style={{ display: "flex", gap: "10px" }}>
+        <div className="po-toolbar-actions">
           <button className="btn btn-secondary" onClick={openSuggestionsModal}>
             <IconClock size={16} /> Restock Suggestions
           </button>
@@ -337,8 +337,9 @@ export default function PurchaseOrders({ onNotify, initialRestockProduct }) {
       </div>
 
       {/* Orders Table */}
-      <div className="card" style={{ padding: 0 }}>
-        <div className="table-container" style={{ border: "none" }}>
+      <div className="card po-main-card">
+        {/* Desktop / Tablet Table View */}
+        <div className="table-container po-desktop-table" style={{ border: "none" }}>
           <table>
             <thead>
               <tr>
@@ -368,88 +369,20 @@ export default function PurchaseOrders({ onNotify, initialRestockProduct }) {
                       </span>
                     </td>
                     <td>{po.supplier_name}</td>
-                    <td>{formatDate(po.created_at)}</td>
-                    <td>{po.items?.length || 0} items</td>
-                    <td>
+                    <td style={{ whiteSpace: "nowrap" }}>{formatDate(po.created_at)}</td>
+                    <td style={{ whiteSpace: "nowrap" }}>{po.items?.length || 0} items</td>
+                    <td style={{ whiteSpace: "nowrap" }}>
                       <strong className="mono">{peso(po.total)}</strong>
                     </td>
                     <td>{getStatusBadge(po.status)}</td>
                     <td>
-                      <span style={{ fontSize: "0.8rem", color: "var(--color-text-secondary)" }}>
+                      <span style={{ fontSize: "0.8rem", color: "var(--color-text-secondary)", whiteSpace: "nowrap" }}>
                         {po.created_by} <small>({po.created_by_role})</small>
                       </span>
                     </td>
                     <td>
-                      <div style={{ display: "flex", gap: "6px", alignItems: "center" }}>
-                        <button
-                          className="btn btn-secondary btn-sm"
-                          onClick={() => {
-                            setSelectedPo(po);
-                            setIsDetailsOpen(true);
-                          }}
-                        >
-                          View
-                        </button>
-
-                        {/* DRAFT ACTIONS */}
-                        {po.status === "draft" && (
-                          <>
-                            {canDraft && (
-                              <button
-                                className="btn btn-secondary btn-sm"
-                                onClick={() => openEditDraftModal(po)}
-                              >
-                                <IconEdit size={12} /> Edit
-                              </button>
-                            )}
-                            {canSubmit && (
-                              <button
-                                className="btn btn-primary btn-sm"
-                                onClick={() => handleSubmitPo(po.id)}
-                              >
-                                Submit
-                              </button>
-                            )}
-                          </>
-                        )}
-
-                        {/* PENDING APPROVAL ACTIONS */}
-                        {po.status === "pending_approval" && (
-                          <>
-                            {isOwner ? (
-                              <button
-                                className="btn btn-primary btn-sm"
-                                onClick={() => handleApprovePo(po.id)}
-                              >
-                                <IconCheckCircle size={12} /> Approve
-                              </button>
-                            ) : (
-                              <span style={{ fontSize: "0.75rem", color: "var(--color-text-muted)" }}>
-                                Awaiting Owner
-                              </span>
-                            )}
-                          </>
-                        )}
-
-                        {/* APPROVED ACTIONS */}
-                        {po.status === "approved" && isOwner && (
-                          <button
-                            className="btn btn-secondary btn-sm"
-                            onClick={() => handleSendPo(po.id)}
-                          >
-                            <IconSend size={12} /> Send
-                          </button>
-                        )}
-
-                        {/* SENT ACTIONS */}
-                        {po.status === "sent" && canReceive && (
-                          <button
-                            className="btn btn-primary btn-sm"
-                            onClick={() => openReceiveModal(po)}
-                          >
-                            <IconTruck size={12} /> Receive Stock
-                          </button>
-                        )}
+                      <div className="po-table-actions">
+                        {renderPoActions(po)}
                       </div>
                     </td>
                   </tr>
@@ -457,6 +390,47 @@ export default function PurchaseOrders({ onNotify, initialRestockProduct }) {
               )}
             </tbody>
           </table>
+        </div>
+
+        {/* Mobile Touch-Friendly Cards View (<= 768px) */}
+        <div className="po-mobile-cards">
+          {filteredPOs.length === 0 ? (
+            <div style={{ textAlign: "center", padding: "32px 16px", color: "var(--color-text-muted)", fontSize: "0.85rem" }}>
+              No purchase orders found for this tab.
+            </div>
+          ) : (
+            filteredPOs.map((po) => (
+              <div key={po.id} className="po-card-item">
+                <div className="po-card-top">
+                  <div>
+                    <span className="mono po-card-id">#{String(po.id).padStart(4, "0")}</span>
+                    <h4 className="po-card-supplier">{po.supplier_name}</h4>
+                  </div>
+                  <div>{getStatusBadge(po.status)}</div>
+                </div>
+
+                <div className="po-card-details">
+                  <div className="po-card-meta">
+                    <span>{formatDate(po.created_at)}</span>
+                    <span>•</span>
+                    <span>{po.items?.length || 0} items</span>
+                  </div>
+                  <div className="po-card-total">
+                    <strong className="mono">{peso(po.total)}</strong>
+                  </div>
+                </div>
+
+                <div className="po-card-footer">
+                  <span className="po-card-creator">
+                    By {po.created_by} <small>({po.created_by_role})</small>
+                  </span>
+                  <div className="po-card-actions">
+                    {renderPoActions(po)}
+                  </div>
+                </div>
+              </div>
+            ))
+          )}
         </div>
       </div>
 
@@ -476,7 +450,7 @@ export default function PurchaseOrders({ onNotify, initialRestockProduct }) {
               </button>
             </div>
             <div className="modal-body">
-              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center" }}>
+              <div style={{ display: "flex", justifyContent: "space-between", alignItems: "center", flexWrap: "wrap", gap: "10px" }}>
                 <div>
                   <span style={{ fontSize: "0.82rem", color: "var(--color-text-secondary)" }}>
                     Current Status:
@@ -691,7 +665,7 @@ export default function PurchaseOrders({ onNotify, initialRestockProduct }) {
               </button>
             </div>
             <div className="modal-body">
-              <div style={{ display: "flex", gap: "12px", alignItems: "flex-end" }}>
+              <div style={{ display: "flex", gap: "12px", alignItems: "flex-end", flexWrap: "wrap" }}>
                 <div className="form-group" style={{ flex: 1 }}>
                   <label>Budget (₱)</label>
                   <input

@@ -119,7 +119,7 @@ export default function Dashboard({ onNavigate, onOpenNewPo }) {
         </div>
       </div>
 
-      <div style={{ display: "grid", gridTemplateColumns: "repeat(auto-fit, minmax(360px, 1fr))", gap: "24px", marginBottom: "24px" }}>
+      <div className="dashboard-two-col">
         {/* Critical Alerts Card */}
         <div className="card">
           <div className="card-header">
@@ -195,7 +195,7 @@ export default function Dashboard({ onNavigate, onOpenNewPo }) {
             <span className="badge badge-healthy">{healthyPct}% Healthy</span>
           </div>
 
-          <div style={{ display: "flex", alignItems: "center", justifyContent: "space-around", padding: "12px 0" }}>
+          <div className="dashboard-health-row">
             {/* SVG Donut */}
             <div style={{ position: "relative", width: "140px", height: "140px" }}>
               <svg width="140" height="140" viewBox="0 0 42 42">
