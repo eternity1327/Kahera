@@ -69,6 +69,18 @@ Set `TELEGRAM_BOT_TOKEN`, `TELEGRAM_CHAT_ID` and `RESTOCK_BUDGET` in `backend/.e
 
 ## Run it
 
+### Prerequisites
+
+- Python 3.12+
+- Node.js 20+
+- MySQL 8. No MySQL yet? Start one with Docker:
+
+```bash
+docker run -d --name kahera-mysql -e MYSQL_ROOT_PASSWORD=kahera -e MYSQL_DATABASE=kahera -p 3306:3306 mysql:8
+```
+
+Then use `DATABASE_URL=mysql+pymysql://root:kahera@localhost:3306/kahera` in `backend/.env` and skip the `CREATE DATABASE` step.
+
 ### Backend
 
 ```bash
