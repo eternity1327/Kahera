@@ -1,5 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { api, peso, formatDate, getActiveRole } from "../api.js";
+import SalesPerDayChart from "../components/SalesPerDayChart.jsx";
 import {
   IconPackage,
   IconAlertTriangle,
@@ -118,6 +119,9 @@ export default function Dashboard({ onNavigate, onOpenNewPo }) {
           </div>
         </div>
       </div>
+
+      {/* Sales Per Day Chart */}
+      <SalesPerDayChart sales={sales} />
 
       <div className="dashboard-two-col">
         {/* Critical Alerts Card */}
