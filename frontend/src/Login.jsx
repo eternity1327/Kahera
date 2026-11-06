@@ -47,7 +47,6 @@ export default function Login({ onLogin }) {
       }}
     >
       <div className="card login-card">
-        {/* Brand Header */}
         <div style={{ textAlign: "center", marginBottom: "24px" }}>
           <div
             className="brand-icon"
@@ -77,8 +76,6 @@ export default function Login({ onLogin }) {
           </div>
         )}
 
-
-        {/* Credentials Form */}
         <form onSubmit={handleSubmit} style={{ display: "flex", flexDirection: "column", gap: "14px" }}>
           <div className="form-group">
             <label>Username</label>

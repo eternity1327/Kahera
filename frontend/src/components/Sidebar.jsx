@@ -49,7 +49,6 @@ export default function Sidebar({
 
   return (
     <aside className="sidebar">
-      {/* Brand Header (Desktop only) */}
       <div className="sidebar-brand">
         <div className="brand-icon">K</div>
         <div className="brand-text">
@@ -58,7 +57,6 @@ export default function Sidebar({
         </div>
       </div>
 
-      {/* Navigation (Sidebar on Desktop, Mobile Navbar at the Bottom on Phones) */}
       <nav className="sidebar-nav">
         {navItems.map((item) => {
           const Icon = item.icon;
@@ -92,7 +90,6 @@ export default function Sidebar({
         })}
       </nav>
 
-      {/* User Footer (Desktop only) */}
       <div className="sidebar-footer">
         <div className="user-card">
           <div className="user-avatar">{username.slice(0, 2).toUpperCase()}</div>

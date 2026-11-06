@@ -32,7 +32,6 @@ export default function Reports({ onNotify }) {
     load();
   }, []);
 
-  // Compute metrics
   const totalCostValuation = products.reduce((acc, p) => {
     const unitCost = p.pack_size ? p.cost_per_pack / p.pack_size : 0;
     return acc + p.on_hand_units * unitCost;
@@ -112,7 +111,6 @@ export default function Reports({ onNotify }) {
         </button>
       </div>
 
-      {/* Summary Metrics */}
       <div className="metrics-grid">
         <div className="metric-card">
           <div className="metric-header">
@@ -167,9 +165,7 @@ export default function Reports({ onNotify }) {
         </div>
       </div>
 
-      {/* Responsive Reports Breakdown Section */}
       <div className="reports-two-col">
-        {/* Top Stock Valuation Items */}
         <div className="card report-table-card">
           <div className="card-header">
             <div>
@@ -178,7 +174,6 @@ export default function Reports({ onNotify }) {
             </div>
           </div>
 
-          {/* Desktop Table View */}
           <div className="table-container report-desktop-table">
             <table>
               <thead>
@@ -224,7 +219,6 @@ export default function Reports({ onNotify }) {
             </table>
           </div>
 
-          {/* Mobile Card-List View */}
           <div className="report-mobile-list">
             {topProducts.length === 0 ? (
               <div style={{ textAlign: "center", padding: "24px", color: "var(--color-text-muted)", fontSize: "0.85rem" }}>
@@ -253,7 +247,6 @@ export default function Reports({ onNotify }) {
           </div>
         </div>
 
-        {/* Purchase Order Status Distribution */}
         <div className="card report-table-card">
           <div className="card-header">
             <div>
@@ -262,7 +255,6 @@ export default function Reports({ onNotify }) {
             </div>
           </div>
 
-          {/* Desktop Table View */}
           <div className="table-container report-desktop-table">
             <table>
               <thead>
@@ -296,7 +288,6 @@ export default function Reports({ onNotify }) {
             </table>
           </div>
 
-          {/* Mobile Card-List View */}
           <div className="report-mobile-list">
             {workflowStatuses.map((status) => {
               const matching = purchaseOrders.filter((po) => po.status === status);

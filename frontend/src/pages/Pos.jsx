@@ -105,7 +105,6 @@ export default function Pos({ onNotify }) {
 
   return (
     <div className="pos-page pos-layout">
-      {/* Products Grid Section */}
       <div>
         <form onSubmit={handleBarcodeSubmit} style={{ marginBottom: "16px" }}>
           <div className="search-box">
@@ -179,7 +178,6 @@ export default function Pos({ onNotify }) {
         </div>
       </div>
 
-      {/* POS Cart Sidebar */}
       <div className="card pos-cart-card">
         <div className="card-header" style={{ marginBottom: "12px" }}>
           <h3 className="card-title" style={{ display: "flex", alignItems: "center", gap: "8px" }}>

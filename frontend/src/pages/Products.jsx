@@ -24,11 +24,10 @@ export default function Products({ onNotify }) {
   const [products, setProducts] = useState([]);
   const [suppliers, setSuppliers] = useState([]);
   const [search, setSearch] = useState("");
-  const [statusFilter, setStatusFilter] = useState("all"); // 'all' | 'low' | 'out' | 'healthy'
+  const [statusFilter, setStatusFilter] = useState("all");
   const [supplierFilter, setSupplierFilter] = useState("all");
   const [loading, setLoading] = useState(false);
 
-  // Modal states
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editingId, setEditingId] = useState(null);
@@ -166,7 +165,6 @@ export default function Products({ onNotify }) {
     onNotify("Exported products catalog to CSV", "success");
   };
 
-  // Filter products
   const filteredProducts = products.filter((p) => {
     const matchesSearch =
       p.name.toLowerCase().includes(search.toLowerCase()) ||
@@ -185,7 +183,6 @@ export default function Products({ onNotify }) {
 
   return (
     <div className="products-page">
-      {/* Action Toolbar */}
       <div className="toolbar">
         <div style={{ display: "flex", alignItems: "center", gap: "12px", flexWrap: "wrap", flex: 1 }}>
           <div className="search-box">
@@ -228,7 +225,6 @@ export default function Products({ onNotify }) {
         </div>
       </div>
 
-      {/* Product Table */}
       <div className="card" style={{ padding: 0 }}>
         <div className="table-container" style={{ border: "none" }}>
           <table>
@@ -339,7 +335,6 @@ export default function Products({ onNotify }) {
         </div>
       </div>
 
-      {/* Add / Edit Product Modal */}
       {isModalOpen && (
         <div className="modal-overlay" onClick={() => setIsModalOpen(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
@@ -463,7 +458,6 @@ export default function Products({ onNotify }) {
         </div>
       )}
 
-      {/* Delete Confirmation Modal */}
       {deleteConfirmId && (
         <div className="modal-overlay" onClick={() => setDeleteConfirmId(null)}>
           <div className="modal-content" style={{ maxWidth: "440px" }} onClick={(e) => e.stopPropagation()}>

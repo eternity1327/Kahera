@@ -1,7 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500;600&display=swap");
 
 :root {
-  /* Light Theme */
   --color-primary: #005a9c;
   --color-primary-hover: #00477d;
   --color-primary-light: #e6f0fa;
@@ -39,7 +38,6 @@
 }
 
 [data-theme="dark"] {
-  /* Dark Theme */
   --color-primary: #74aaff;
   --color-primary-hover: #98c1ff;
   --color-primary-light: rgba(116, 170, 255, 0.15);
@@ -90,7 +88,6 @@ code, pre, .mono {
   font-family: "JetBrains Mono", monospace;
 }
 
-/* App Layout */
 .app-layout {
   display: flex;
   min-height: 100vh;
@@ -120,8 +117,6 @@ code, pre, .mono {
   }
 }
 
-
-/* Desktop / Mobile Navigation Element Visibility */
 .desktop-label {
   display: inline;
 }
@@ -144,7 +139,6 @@ code, pre, .mono {
   justify-content: center;
 }
 
-/* Sidebar */
 .sidebar {
   width: var(--sidebar-width);
   background-color: var(--color-surface);
@@ -368,7 +362,6 @@ code, pre, .mono {
   box-sizing: border-box;
 }
 
-/* Header */
 .top-header {
   background-color: var(--color-surface);
   border-bottom: 1px solid var(--color-divider);
@@ -423,7 +416,6 @@ code, pre, .mono {
   gap: 10px;
 }
 
-/* Role Simulator Switcher */
 .role-pill-group {
   display: flex;
   align-items: center;
@@ -456,7 +448,6 @@ code, pre, .mono {
   box-shadow: var(--shadow-sm);
 }
 
-/* Buttons */
 button, .btn {
   display: inline-flex;
   align-items: center;
@@ -537,7 +528,6 @@ button:disabled, .btn:disabled {
   pointer-events: none;
 }
 
-/* Cards */
 .card {
   background-color: var(--color-surface);
   border: 1px solid var(--color-card-border);
@@ -571,7 +561,6 @@ button:disabled, .btn:disabled {
   color: var(--color-text-muted);
 }
 
-/* Metric / Summary Cards Grid */
 .metrics-grid {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
@@ -641,7 +630,6 @@ button:disabled, .btn:disabled {
   color: var(--color-error);
 }
 
-/* Tables */
 .table-container {
   overflow-x: auto;
   border: 1px solid var(--color-divider);
@@ -683,7 +671,6 @@ tbody tr:hover {
   background-color: var(--color-surface-hover);
 }
 
-/* Low Stock Table Row Styling (from design.md) */
 tr.row-low-stock {
   background-color: var(--color-error-bg);
   border-left: 3px solid var(--color-error);
@@ -698,7 +685,6 @@ tr.row-out-of-stock {
   border-left: 3px solid #8b0000;
 }
 
-/* Badges */
 .badge {
   display: inline-flex;
   align-items: center;
@@ -761,7 +747,6 @@ tr.row-out-of-stock {
   border: 1px solid var(--color-success-border);
 }
 
-/* Modals */
 .modal-overlay {
   position: fixed;
   inset: 0;
@@ -826,7 +811,6 @@ tr.row-out-of-stock {
   border-bottom-right-radius: var(--radius-lg);
 }
 
-/* Form Controls */
 .form-group {
   display: flex;
   flex-direction: column;
@@ -862,7 +846,6 @@ input:focus, select:focus, textarea:focus {
   box-shadow: 0 0 0 3px var(--color-primary-light);
 }
 
-/* Filter Controls Toolbar */
 .toolbar {
   display: flex;
   align-items: center;
@@ -891,7 +874,6 @@ input:focus, select:focus, textarea:focus {
   pointer-events: none;
 }
 
-/* Toast Notification */
 .toast-container {
   position: fixed;
   bottom: 24px;
@@ -927,7 +909,6 @@ input:focus, select:focus, textarea:focus {
   border-left-color: var(--color-error);
 }
 
-/* Tab Navigation */
 .tabs {
   display: flex;
   border-bottom: 1px solid var(--color-divider);
@@ -957,7 +938,6 @@ input:focus, select:focus, textarea:focus {
   border-bottom-color: var(--color-primary);
 }
 
-/* Animations */
 @keyframes fadeIn {
   from { opacity: 0; }
   to { opacity: 1; }
@@ -973,12 +953,6 @@ input:focus, select:focus, textarea:focus {
   to { transform: translateX(0); opacity: 1; }
 }
 
-
-/* ==========================================================================
-   Responsive & Adaptive Layout Components
-   ========================================================================== */
-
-/* Mobile Backdrop Overlay */
 .sidebar-overlay {
   position: fixed;
   inset: 0;
@@ -989,7 +963,6 @@ input:focus, select:focus, textarea:focus {
   animation: fadeIn 0.2s ease-out;
 }
 
-/* Header & Sidebar Mobile Controls */
 .mobile-menu-btn {
   display: none;
 }
@@ -1004,7 +977,6 @@ input:focus, select:focus, textarea:focus {
   white-space: nowrap;
 }
 
-/* Dashboard Responsive Layouts */
 .dashboard-two-col {
   display: grid;
   grid-template-columns: repeat(auto-fit, minmax(320px, 1fr));
@@ -1021,7 +993,6 @@ input:focus, select:focus, textarea:focus {
   flex-wrap: wrap;
 }
 
-/* POS Responsive Layouts */
 .pos-layout {
   display: grid;
   grid-template-columns: 1fr 340px;
@@ -1044,7 +1015,6 @@ input:focus, select:focus, textarea:focus {
   top: 80px;
 }
 
-/* Reports Responsive Layouts */
 .reports-two-col {
   display: grid;
   grid-template-columns: 1fr 1fr;
@@ -1052,7 +1022,6 @@ input:focus, select:focus, textarea:focus {
   margin-bottom: 24px;
 }
 
-/* Login Card Responsive */
 .login-card {
   width: 100%;
   max-width: 420px;
@@ -1061,7 +1030,6 @@ input:focus, select:focus, textarea:focus {
   box-sizing: border-box;
 }
 
-/* Table Responsive Scrolling */
 .table-container {
   overflow-x: auto;
   -webkit-overflow-scrolling: touch;
@@ -1072,11 +1040,6 @@ input:focus, select:focus, textarea:focus {
   max-width: 100%;
 }
 
-/* ==========================================================================
-   MEDIA QUERIES (Breakpoints: 1200px, 992px, 768px, 640px, 480px, 360px)
-   ========================================================================== */
-
-/* Large Tablets & Small Laptops (<= 1200px) */
 @media (max-width: 1200px) {
   .main-content {
     padding: 20px 24px 40px;
@@ -1088,7 +1051,6 @@ input:focus, select:focus, textarea:focus {
   }
 }
 
-/* Tablets (<= 992px) */
 @media (max-width: 992px) {
   .pos-layout {
     grid-template-columns: 1fr;
@@ -1110,16 +1072,11 @@ input:focus, select:focus, textarea:focus {
   }
 }
 
-
-/* ==========================================================================
-   MOBILE PHONES & SMALL TABLETS (<= 768px): BOTTOM NAVIGATION BAR
-   ========================================================================== */
 @media (max-width: 768px) {
   .app-layout {
     flex-direction: column;
   }
 
-  /* Transform Sidebar into Fixed Bottom Bar */
   .sidebar {
     position: fixed !important;
     bottom: 0 !important;
@@ -1145,7 +1102,6 @@ input:focus, select:focus, textarea:focus {
     box-shadow: 0 -3px 14px rgba(0, 0, 0, 0.45) !important;
   }
 
-  /* Hide Desktop-only Elements inside Sidebar on Mobile */
   .sidebar-brand,
   .sidebar-footer,
   .desktop-label,
@@ -1153,7 +1109,6 @@ input:focus, select:focus, textarea:focus {
     display: none !important;
   }
 
-  /* Bottom Nav Container */
   .sidebar-nav {
     display: flex !important;
     flex-direction: row !important;
@@ -1172,7 +1127,6 @@ input:focus, select:focus, textarea:focus {
     display: none;
   }
 
-  /* Bottom Nav Items */
   .nav-item {
     flex: 1 !important;
     min-width: 0 !important;
@@ -1222,7 +1176,6 @@ input:focus, select:focus, textarea:focus {
     text-align: center !important;
   }
 
-  /* Notification Badge in Bottom Nav */
   .mobile-badge {
     display: flex !important;
     align-items: center;
@@ -1240,19 +1193,16 @@ input:focus, select:focus, textarea:focus {
     z-index: 2;
   }
 
-  /* Content Clearance for Bottom Navbar */
   .main-content {
     padding: 16px 16px calc(76px + env(safe-area-inset-bottom, 0px)) !important;
   }
 
-  /* Toast Notification Placement above Bottom Nav */
   .toast-container {
     bottom: calc(72px + env(safe-area-inset-bottom, 0px)) !important;
     right: 12px;
     left: 12px;
   }
 
-  /* Header Branding on Mobile */
   .header-brand-mobile {
     display: flex !important;
     align-items: center;
@@ -1272,7 +1222,6 @@ input:focus, select:focus, textarea:focus {
     flex-shrink: 0;
   }
 
-  /* Header Quick Controls on Mobile */
   .header-mobile-action {
     display: inline-flex !important;
     padding: 6px;
@@ -1300,7 +1249,6 @@ input:focus, select:focus, textarea:focus {
     font-size: 1.6rem;
   }
 
-  /* Toolbar wraps cleanly */
   .toolbar {
     flex-direction: column;
     align-items: stretch;
@@ -1337,8 +1285,6 @@ input:focus, select:focus, textarea:focus {
   }
 }
 
-
-/* Standard Mobile Phones (<= 640px) */
 @media (max-width: 640px) {
   .top-header {
     padding: 10px 14px;
@@ -1377,7 +1323,6 @@ input:focus, select:focus, textarea:focus {
     gap: 10px;
   }
 
-  /* Modals full width / bottom-sheet friendly on mobile */
   .modal-overlay {
     padding: 8px;
     align-items: flex-end;
@@ -1411,7 +1356,6 @@ input:focus, select:focus, textarea:focus {
     min-width: 100px;
   }
 
-  /* Toast Notification mobile styling */
   .toast-container {
     right: 12px;
     left: 12px;
@@ -1430,7 +1374,6 @@ input:focus, select:focus, textarea:focus {
   }
 }
 
-/* Compact Mobile Phones (<= 480px) */
 @media (max-width: 480px) {
   .main-content {
     padding: 12px 10px 24px;
@@ -1485,7 +1428,6 @@ input:focus, select:focus, textarea:focus {
   }
 }
 
-/* Extra Narrow Mobile (<= 360px) */
 @media (max-width: 360px) {
   .sidebar {
     width: 88vw;
@@ -1507,11 +1449,6 @@ input:focus, select:focus, textarea:focus {
     max-width: 85px;
   }
 }
-
-
-/* ==========================================================================
-   Reports Page Responsive Styles
-   ========================================================================== */
 
 .reports-two-col {
   display: grid;
@@ -1548,7 +1485,6 @@ input:focus, select:focus, textarea:focus {
   padding: 12px 18px;
 }
 
-/* Report Mobile List View */
 .report-mobile-list {
   display: none;
   flex-direction: column;
@@ -1615,10 +1551,6 @@ input:focus, select:focus, textarea:focus {
   }
 }
 
-/* ==========================================================================
-   Purchase Orders Responsive Styles
-   ========================================================================== */
-
 .po-main-card {
   padding: 0 !important;
   overflow: hidden;
@@ -1642,7 +1574,6 @@ input:focus, select:focus, textarea:focus {
   border-radius: 0 !important;
 }
 
-/* Mobile PO Cards (<= 768px) */
 .po-mobile-cards {
   display: none;
   flex-direction: column;
@@ -1770,11 +1701,6 @@ input:focus, select:focus, textarea:focus {
     min-width: 0;
   }
 }
-
-
-/* ==========================================================================
-   Sales Per Day Chart Component
-   ========================================================================== */
 
 .sales-chart-card {
   margin-bottom: 24px;

@@ -138,7 +138,6 @@ export default function Settings({ onNotify, theme, onToggleTheme }) {
         </div>
       </div>
 
-      {/* Audit Log (GET /audit-log) */}
       <div className="card">
         <div className="card-header">
           <div>
@@ -189,7 +188,6 @@ export default function Settings({ onNotify, theme, onToggleTheme }) {
         </>
       )}
 
-      {/* Add Staff Modal */}
       {isAddUserOpen && (
         <div className="modal-overlay" onClick={() => setIsAddUserOpen(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>

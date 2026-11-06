@@ -22,13 +22,11 @@ export default function App() {
   const [counts, setCounts] = useState({ lowStock: 0, pendingPo: 0 });
   const [prefilledRestockProduct, setPrefilledRestockProduct] = useState(null);
 
-  // Sync theme to root HTML element
   useEffect(() => {
     document.documentElement.setAttribute("data-theme", theme);
     localStorage.setItem("kahera_theme", theme);
   }, [theme]);
 
-  // Load badge counts
   const refreshCounts = async () => {
     try {
       const [products, pos] = await Promise.all([
@@ -39,7 +37,6 @@ export default function App() {
       const pendingPo = (pos || []).filter((po) => po.status === "pending_approval").length;
       setCounts({ lowStock, pendingPo });
     } catch {
-      // quiet fail
     }
   };
 
@@ -106,7 +103,6 @@ export default function App() {
 
   return (
     <div className="app-layout">
-      {/* Responsive Navigation: Persistent Sidebar on Desktop, Mobile Bottom Navbar on Phones */}
       <Sidebar
         currentPage={currentPage}
         onNavigate={handleNavigate}
@@ -118,7 +114,6 @@ export default function App() {
       />
 
       <div className="main-wrapper">
-        {/* Sticky Top Header */}
         <Header
           title={getPageTitle()}
           theme={theme}
@@ -126,7 +121,6 @@ export default function App() {
           onLogout={handleLogout}
         />
 
-        {/* Dynamic Page Content */}
         <main className="main-content">
           {currentPage === "dashboard" && (
             <Dashboard
@@ -154,10 +148,8 @@ export default function App() {
         </main>
       </div>
 
-      {/* Global Toast Alerts */}
       <Toast toasts={toasts} onDismiss={dismissToast} />
 
-      {/* 22-API Endpoints Specification Modal */}
       <ApiCatalogModal
         isOpen={isApiModalOpen}
         onClose={() => setIsApiModalOpen(false)}

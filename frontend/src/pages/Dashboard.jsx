@@ -38,7 +38,6 @@ export default function Dashboard({ onNavigate, onOpenNewPo }) {
     loadData();
   }, []);
 
-  // Compute metrics
   const totalStockValuation = products.reduce((sum, p) => {
     const costPerUnit = p.pack_size ? p.cost_per_pack / p.pack_size : 0;
     return sum + p.on_hand_units * costPerUnit;
@@ -51,7 +50,6 @@ export default function Dashboard({ onNavigate, onOpenNewPo }) {
   const pendingOrders = purchaseOrders.filter((po) => po.status === "pending_approval");
   const todaySalesTotal = sales.reduce((sum, s) => sum + Number(s.total || 0), 0);
 
-  // Health chart calculations
   const totalCount = products.length || 1;
   const healthyPct = Math.round((healthyProducts.length / totalCount) * 100);
   const lowStockPct = Math.round(((lowStockProducts.length - outOfStockProducts.length) / totalCount) * 100);
@@ -63,7 +61,6 @@ export default function Dashboard({ onNavigate, onOpenNewPo }) {
 
   return (
     <div className="dashboard-page">
-      {/* Metrics Row */}
       <div className="metrics-grid">
         <div className="metric-card">
           <div className="metric-header">
@@ -120,11 +117,9 @@ export default function Dashboard({ onNavigate, onOpenNewPo }) {
         </div>
       </div>
 
-      {/* Sales Per Day Chart */}
       <SalesPerDayChart sales={sales} />
 
       <div className="dashboard-two-col">
-        {/* Critical Alerts Card */}
         <div className="card">
           <div className="card-header">
             <div>
@@ -189,7 +184,6 @@ export default function Dashboard({ onNavigate, onOpenNewPo }) {
           )}
         </div>
 
-        {/* Inventory Health Donut Card */}
         <div className="card">
           <div className="card-header">
             <div>
@@ -200,11 +194,9 @@ export default function Dashboard({ onNavigate, onOpenNewPo }) {
           </div>
 
           <div className="dashboard-health-row">
-            {/* SVG Donut */}
             <div style={{ position: "relative", width: "140px", height: "140px" }}>
               <svg width="140" height="140" viewBox="0 0 42 42">
                 <circle cx="21" cy="21" r="15.915" fill="transparent" stroke="var(--color-border)" strokeWidth="4"></circle>
-                {/* Healthy slice */}
                 <circle
                   cx="21"
                   cy="21"
@@ -215,7 +207,6 @@ export default function Dashboard({ onNavigate, onOpenNewPo }) {
                   strokeDasharray={`${healthyPct} ${100 - healthyPct}`}
                   strokeDashoffset="25"
                 ></circle>
-                {/* Low stock slice */}
                 <circle
                   cx="21"
                   cy="21"
@@ -226,7 +217,6 @@ export default function Dashboard({ onNavigate, onOpenNewPo }) {
                   strokeDasharray={`${lowStockPct} ${100 - lowStockPct}`}
                   strokeDashoffset={`${25 - healthyPct}`}
                 ></circle>
-                {/* Out of stock slice */}
                 <circle
                   cx="21"
                   cy="21"
@@ -253,7 +243,6 @@ export default function Dashboard({ onNavigate, onOpenNewPo }) {
               </div>
             </div>
 
-            {/* Health Breakdown Legend */}
             <div style={{ display: "flex", flexDirection: "column", gap: "10px", fontSize: "0.82rem" }}>
               <div style={{ display: "flex", alignItems: "center", gap: "8px" }}>
                 <span style={{ width: "10px", height: "10px", borderRadius: "50%", background: "var(--color-success)" }}></span>
@@ -278,7 +267,6 @@ export default function Dashboard({ onNavigate, onOpenNewPo }) {
         </div>
       </div>
 
-      {/* Recent Purchase Orders Card */}
       <div className="card">
         <div className="card-header">
           <div>

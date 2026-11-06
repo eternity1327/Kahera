@@ -18,22 +18,19 @@ export default function PurchaseOrders({ onNotify, initialRestockProduct }) {
   const [activeTab, setActiveTab] = useState("all");
   const [loading, setLoading] = useState(false);
 
-  // Modals
   const [isNewPoOpen, setIsNewPoOpen] = useState(false);
   const [isSuggestionsOpen, setIsSuggestionsOpen] = useState(false);
   const [isReceivingOpen, setIsReceivingOpen] = useState(false);
   const [isDetailsOpen, setIsDetailsOpen] = useState(false);
   const [isEditDraftOpen, setIsEditDraftOpen] = useState(false);
 
-  // Modal active states
   const [selectedPo, setSelectedPo] = useState(null);
   const [suggestions, setSuggestions] = useState(null);
   const [budgetInput, setBudgetInput] = useState("5000");
 
-  // New / Draft PO form
   const [poFormSupplierId, setPoFormSupplierId] = useState("");
   const [poFormBudget, setPoFormBudget] = useState("");
-  const [poFormItems, setPoFormItems] = useState([]); // [{ product_id, packs }]
+  const [poFormItems, setPoFormItems] = useState([]);
 
   const role = getActiveRole();
   const isOwner = role === "owner";
@@ -80,7 +77,6 @@ export default function PurchaseOrders({ onNotify, initialRestockProduct }) {
     const defaultSup = suppliers[0]?.id || "";
     setPoFormSupplierId(defaultSup);
     setPoFormBudget("");
-    // Find products for this supplier
     const supProds = products.filter((p) => p.supplier_id === Number(defaultSup));
     if (supProds.length > 0) {
       setPoFormItems([{ product_id: supProds[0].id, packs: 2 }]);
@@ -126,7 +122,6 @@ export default function PurchaseOrders({ onNotify, initialRestockProduct }) {
     setPoFormItems(updated);
   };
 
-  // Submit Draft Creation
   const handleSaveDraft = async () => {
     if (!poFormSupplierId) return onNotify("Please select a supplier", "error");
     if (poFormItems.length === 0) return onNotify("Please add at least one product", "error");
@@ -148,7 +143,6 @@ export default function PurchaseOrders({ onNotify, initialRestockProduct }) {
     }
   };
 
-  // Edit Existing Draft
   const openEditDraftModal = (po) => {
     setSelectedPo(po);
     setPoFormSupplierId(po.supplier_id);
@@ -180,7 +174,6 @@ export default function PurchaseOrders({ onNotify, initialRestockProduct }) {
     }
   };
 
-  // Workflow Actions
   const handleSubmitPo = async (poId) => {
     try {
       await api(`/purchase-orders/${poId}/submit`, { method: "POST" });
@@ -228,7 +221,6 @@ export default function PurchaseOrders({ onNotify, initialRestockProduct }) {
     }
   };
 
-  // Restock Suggestions
   const openSuggestionsModal = async () => {
     try {
       const data = await api(`/restock/suggestions?budget=${budgetInput}`);
@@ -252,7 +244,6 @@ export default function PurchaseOrders({ onNotify, initialRestockProduct }) {
     }
   };
 
-  // Filter POs by tab
   const filteredPOs = purchaseOrders.filter((po) => {
     if (activeTab === "all") return true;
     return po.status === activeTab;
@@ -338,7 +329,6 @@ export default function PurchaseOrders({ onNotify, initialRestockProduct }) {
         </div>
       </div>
 
-      {/* Tabs */}
       <div className="tabs">
         <button
           className={`tab-btn ${activeTab === "all" ? "active" : ""}`}
@@ -378,9 +368,7 @@ export default function PurchaseOrders({ onNotify, initialRestockProduct }) {
         </button>
       </div>
 
-      {/* Orders Table */}
       <div className="card po-main-card">
-        {/* Desktop / Tablet Table View */}
         <div className="table-container po-desktop-table" style={{ border: "none" }}>
           <table>
             <thead>
@@ -434,7 +422,6 @@ export default function PurchaseOrders({ onNotify, initialRestockProduct }) {
           </table>
         </div>
 
-        {/* Mobile Touch-Friendly Cards View (<= 768px) */}
         <div className="po-mobile-cards">
           {filteredPOs.length === 0 ? (
             <div style={{ textAlign: "center", padding: "32px 16px", color: "var(--color-text-muted)", fontSize: "0.85rem" }}>
@@ -476,7 +463,6 @@ export default function PurchaseOrders({ onNotify, initialRestockProduct }) {
         </div>
       </div>
 
-      {/* PO Details Modal */}
       {isDetailsOpen && selectedPo && (
         <div className="modal-overlay" onClick={() => setIsDetailsOpen(false)}>
           <div className="modal-content modal-lg" onClick={(e) => e.stopPropagation()}>
@@ -557,7 +543,6 @@ export default function PurchaseOrders({ onNotify, initialRestockProduct }) {
         </div>
       )}
 
-      {/* New PO / Edit Draft Modal */}
       {(isNewPoOpen || isEditDraftOpen) && (
         <div className="modal-overlay" onClick={() => { setIsNewPoOpen(false); setIsEditDraftOpen(false); }}>
           <div className="modal-content modal-lg" onClick={(e) => e.stopPropagation()}>
@@ -691,7 +676,6 @@ export default function PurchaseOrders({ onNotify, initialRestockProduct }) {
         </div>
       )}
 
-      {/* Restock Suggestions Modal */}
       {isSuggestionsOpen && suggestions && (
         <div className="modal-overlay" onClick={() => setIsSuggestionsOpen(false)}>
           <div className="modal-content modal-lg" onClick={(e) => e.stopPropagation()}>
@@ -783,7 +767,6 @@ export default function PurchaseOrders({ onNotify, initialRestockProduct }) {
         </div>
       )}
 
-      {/* Inventory Receiving Modal (Section 7) */}
       {isReceivingOpen && selectedPo && (
         <div className="modal-overlay" onClick={() => setIsReceivingOpen(false)}>
           <div className="modal-content" onClick={(e) => e.stopPropagation()}>
