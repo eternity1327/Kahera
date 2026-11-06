@@ -1,6 +1,8 @@
 # Kahera
 
-POS and restock assistant for sari-sari stores. Cashiers sell from the web app; an AI agent called **@restock** watches stock in a Telegram group, drafts purchase orders within the owner's budget, and the owner approves them with one tap.
+POS and restock assistant for small neighborhood stores (sari-sari stores in the Philippines). Cashiers sell from the web app; an AI agent called **@restock** watches stock in a Telegram group, drafts purchase orders within the owner's budget, and the owner approves them with one tap.
+
+**Demo video:** https://youtu.be/QEV_pvquwXI
 
 Built for the WeMakeDevs **Flip the Switch** hackathon, Track 01 Business Workflow, by Gerard (backend + Switch) and Joemar (UI + demo).
 
