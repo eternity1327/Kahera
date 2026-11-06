@@ -1752,3 +1752,21 @@ input:focus, select:focus, textarea:focus {
     display: flex !important;
   }
 }
+
+@media (max-width: 768px) {
+  .table-container {
+    max-width: 100%;
+    overflow-x: auto;
+  }
+  .tabs {
+    max-width: 100%;
+    overflow-x: auto;
+    flex-wrap: nowrap;
+    white-space: nowrap;
+  }
+  .card,
+  .main-content,
+  .page-content {
+    min-width: 0;
+  }
+}

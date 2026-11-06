@@ -258,6 +258,48 @@ export default function PurchaseOrders({ onNotify, initialRestockProduct }) {
     return po.status === activeTab;
   });
 
+  const renderPoActions = (po) => (
+    <>
+      <button
+        className="btn btn-secondary btn-sm"
+        onClick={() => {
+          setSelectedPo(po);
+          setIsDetailsOpen(true);
+        }}
+      >
+        View
+      </button>
+      {po.status === "draft" && canDraft && (
+        <button className="btn btn-secondary btn-sm" onClick={() => openEditDraftModal(po)}>
+          <IconEdit size={12} /> Edit
+        </button>
+      )}
+      {po.status === "draft" && canSubmit && (
+        <button className="btn btn-primary btn-sm" onClick={() => handleSubmitPo(po.id)}>
+          Submit
+        </button>
+      )}
+      {po.status === "pending_approval" && isOwner && (
+        <button className="btn btn-primary btn-sm" onClick={() => handleApprovePo(po.id)}>
+          <IconCheckCircle size={12} /> Approve
+        </button>
+      )}
+      {po.status === "pending_approval" && !isOwner && (
+        <span style={{ fontSize: "0.75rem", color: "var(--color-text-muted)" }}>Awaiting Owner</span>
+      )}
+      {po.status === "approved" && isOwner && (
+        <button className="btn btn-secondary btn-sm" onClick={() => handleSendPo(po.id)}>
+          <IconSend size={12} /> Send
+        </button>
+      )}
+      {po.status === "sent" && canReceive && (
+        <button className="btn btn-primary btn-sm" onClick={() => openReceiveModal(po)}>
+          <IconTruck size={12} /> Receive Stock
+        </button>
+      )}
+    </>
+  );
+
   const getStatusBadge = (status) => {
     switch (status) {
       case "draft":
